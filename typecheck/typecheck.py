@@ -7,7 +7,7 @@ class TypeCheck(object):
 
     def check(self):
         # print("typecheck...")
-        from mypy import api
+        import urllib.request
         import sys
         cells = self.shell.user_ns["In"]
         # print("cells", cells)
@@ -22,18 +22,20 @@ class TypeCheck(object):
             current_cell = "\n".join(current_cell_lines)
             cells_to_run = "\n".join(self.ok_cells + [current_cell])
             # print("cells_to_run", cells_to_run)
-            mypy_result = api.run(['-c', cells_to_run, '--ignore-missing-imports', '--show-column-numbers'])
+            #mypy_result = api.run(['-c', cells_to_run, '--ignore-missing-imports', '--show-column-numbers'])
+            contents = urllib.request.urlopen("https://jsonplaceholder.typicode.com/users").read()
             error = None
-            if mypy_result[0]:
-                error = mypy_result[0]
-            if mypy_result[1]:
-                error = mypy_result[1]
+            print(contents, file=sys.stderr)
+            # if mypy_result[0]:
+            #     error = mypy_result[0]
+            # if mypy_result[1]:
+            #     error = mypy_result[1]
             if error is not None:
                 parts = error.split(":")
                 error_line_number = int(parts[1])
                 error_column_number = int(parts[2])
                 error_line_number = error_line_number - len(("\n".join(self.ok_cells)).split("\n"))
-                
+
                 line_label = "Line "+ str(error_line_number) + ": "
                 error_message = "TypeCheck" + parts[3] + ":" + parts[4]
                 error_message = error_message + "\n" + line_label + current_cell_lines[error_line_number-1]
