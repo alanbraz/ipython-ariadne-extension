@@ -22,7 +22,7 @@ class TypeCheck(object):
             current_cell = "\n".join(current_cell_lines)
             cells_to_run = "\n".join(self.ok_cells + [current_cell])
             # print("cells_to_run", cells_to_run)
-            req = requests.request(method='post', url='https://openwhisk.ng.bluemix.net/api/v1/web/Project%20Runway_sandbox/default/BodyCountChars.json', data=cells_to_run)
+            req = urllib.request(method='post', url='https://openwhisk.ng.bluemix.net/api/v1/web/Project%20Runway_sandbox/default/BodyCountChars.json', data=cells_to_run)
             contents = req.read()
             error = None
             print(json.dumps(json.load(contents.decode("utf-8")), indent=2), file=sys.stderr)
