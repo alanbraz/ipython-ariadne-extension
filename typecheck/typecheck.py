@@ -8,7 +8,7 @@ class TypeCheck(object):
     def check(self):
         # print("typecheck...")
         import urllib.request
-        import sys
+        import sys, json
         cells = self.shell.user_ns["In"]
         # print("cells", cells)
         current_cell = cells[-1]
@@ -25,7 +25,7 @@ class TypeCheck(object):
             #mypy_result = api.run(['-c', cells_to_run, '--ignore-missing-imports', '--show-column-numbers'])
             contents = urllib.request.urlopen("https://jsonplaceholder.typicode.com/users").read()
             error = None
-            print(contents, file=sys.stderr)
+            print(json.dumps(contents.decode("utf-8"), indent=2), file=sys.stderr)
             # if mypy_result[0]:
             #     error = mypy_result[0]
             # if mypy_result[1]:
