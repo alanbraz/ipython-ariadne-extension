@@ -23,9 +23,22 @@ class TypeCheck(object):
             cells_to_run = "\n".join(self.ok_cells + [current_cell])
             # print("cells_to_run", cells_to_run)
             #mypy_result = api.run(['-c', cells_to_run, '--ignore-missing-imports', '--show-column-numbers'])
-            contents = urllib.request.urlopen("https://jsonplaceholder.typicode.com/users").read()
+            #contents = urllib.request.urlopen("https://jsonplaceholder.typicode.com/users").read()
+
+            body = {"code": cells_to_run }
+            myurl = "https://openwhisk.ng.bluemix.net/api/v1/namespaces/Project%20Runway_sandbox/actions/analyzeCode?blocking=true"
+            apiKey = "aa8e9b0b-707b-4548-8dbf-3c53ebc84d78:0wthlpdXBkxO91YVzFIzt27cvUSXaXexiYK7HaKJA9LP5QxWMSPTbyKd4qYSl3Lz"
+            req = urllib.request.Request(myurl)
+            req.add_header('Content-Type', 'application/json; charset=utf-8')
+            req.add_header("Authorization", "Basic %s" % apiKey)
+            jsondata = json.dumps(body)
+            jsondataasbytes = jsondata.encode('utf-8')   # needs to be bytes
+            req.add_header('Content-Length', len(jsondataasbytes))
+            print (jsondataasbytes)
+            response = urllib.request.urlopen(req, jsondataasbytes)
+
             error = None
-            print(json.dumps(json.load(contents.decode("utf-8")), indent=2), file=sys.stderr)
+            print(json.dumps(json.load(response.decode("utf-8")), indent=2), file=sys.stderr)
             # if mypy_result[0]:
             #     error = mypy_result[0]
             # if mypy_result[1]:
