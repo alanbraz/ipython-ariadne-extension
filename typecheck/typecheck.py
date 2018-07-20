@@ -38,13 +38,8 @@ class TypeCheck(object):
             print (jsondataasbytes)
 
             reply = urllib.request.urlopen(req, jsondataasbytes).read()
-            print(reply)
-            print(type(reply))
             data = reply.decode('utf-8')
-            print(data)
-            print(type(data))
             data = json.loads(data)
-            print(data)
             print(json.dumps(data["response"]["result"], indent=2), file=sys.stderr)
 
             error = None
