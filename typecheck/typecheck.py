@@ -37,9 +37,12 @@ class TypeCheck(object):
             req.add_header('Content-Length', len(jsondataasbytes))
             print (jsondataasbytes)
             response = urllib.request.urlopen(req, jsondataasbytes)
+            print(response)
+            data = json.load(response)
+            print(data)
 
             error = None
-            print(json.dumps(json.load(response), indent=2), file=sys.stderr)
+            print(json.dumps(data["response"]["result"], indent=2), file=sys.stderr)
             # if mypy_result[0]:
             #     error = mypy_result[0]
             # if mypy_result[1]:
