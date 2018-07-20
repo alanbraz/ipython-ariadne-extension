@@ -26,13 +26,14 @@ class TypeCheck(object):
             #contents = urllib.request.urlopen("https://jsonplaceholder.typicode.com/users").read()
 
             body = {"code": cells_to_run }
-            myurl = "https://openwhisk.ng.bluemix.net/api/v1/namespaces/Project%20Runway_sandbox/actions/analyzeCode?blocking=true"
+            myurl = "https://openwhisk.ng.bluemix.net/api/v1/namespaces/Project%20Runway_sandbox/actions/typesForML?blocking=true"
             apiKey = "aa8e9b0b-707b-4548-8dbf-3c53ebc84d78:0wthlpdXBkxO91YVzFIzt27cvUSXaXexiYK7HaKJA9LP5QxWMSPTbyKd4qYSl3Lz"
             req = urllib.request.Request(myurl)
             req.add_header('Content-Type', 'application/json; charset=utf-8')
             base64string = base64.standard_b64encode(apiKey.encode('utf-8'))
             req.add_header("Authorization", "Basic %s" % base64string.decode('utf-8'))
             jsondata = json.dumps(body)
+            print(jsondata)
             jsondataasbytes = jsondata.encode('utf-8')   # needs to be bytes
             req.add_header('Content-Length', len(jsondataasbytes))
             print (jsondataasbytes)
