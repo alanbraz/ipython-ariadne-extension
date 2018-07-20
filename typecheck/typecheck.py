@@ -39,7 +39,7 @@ class TypeCheck(object):
             response = urllib.request.urlopen(req, jsondataasbytes)
 
             error = None
-            print(json.dumps(json.load(response.decode("utf-8")), indent=2), file=sys.stderr)
+            print(json.dumps(json.load(response), indent=2), file=sys.stderr)
             # if mypy_result[0]:
             #     error = mypy_result[0]
             # if mypy_result[1]:
