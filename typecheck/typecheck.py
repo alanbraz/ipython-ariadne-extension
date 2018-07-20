@@ -36,13 +36,18 @@ class TypeCheck(object):
             jsondataasbytes = jsondata.encode('utf-8')   # needs to be bytes
             req.add_header('Content-Length', len(jsondataasbytes))
             print (jsondataasbytes)
-            response = urllib.request.urlopen(req, jsondataasbytes)
-            print(response)
-            data = json.load(response)
+
+            reply = urllib.request.urlopen(req, jsondataasbytes).read()
+            print(reply)
+            print(type(reply))
+            data = reply.decode('utf-8')
             print(data)
+            print(type(data))
+            data = json.loads(data)
+            print(data)
+            print(json.dumps(data["response"]["result"], indent=2), file=sys.stderr)
 
             error = None
-            print(json.dumps(data["response"]["result"], indent=2), file=sys.stderr)
             # if mypy_result[0]:
             #     error = mypy_result[0]
             # if mypy_result[1]:
