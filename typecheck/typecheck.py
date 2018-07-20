@@ -8,7 +8,7 @@ class TypeCheck(object):
     def check(self):
         # print("typecheck...")
         import urllib.request
-        import sys, json
+        import sys, json, base64
         cells = self.shell.user_ns["In"]
         # print("cells", cells)
         current_cell = cells[-1]
@@ -30,7 +30,8 @@ class TypeCheck(object):
             apiKey = "aa8e9b0b-707b-4548-8dbf-3c53ebc84d78:0wthlpdXBkxO91YVzFIzt27cvUSXaXexiYK7HaKJA9LP5QxWMSPTbyKd4qYSl3Lz"
             req = urllib.request.Request(myurl)
             req.add_header('Content-Type', 'application/json; charset=utf-8')
-            req.add_header("Authorization", "Basic %s" % apiKey)
+            base64string = base64.b64encode(apiKey)
+            req.add_header("Authorization", "Basic %s" % base64string)
             jsondata = json.dumps(body)
             jsondataasbytes = jsondata.encode('utf-8')   # needs to be bytes
             req.add_header('Content-Length', len(jsondataasbytes))
