@@ -33,10 +33,10 @@ class TypeCheck(object):
             base64string = base64.standard_b64encode(apiKey.encode('utf-8'))
             req.add_header("Authorization", "Basic %s" % base64string.decode('utf-8'))
             jsondata = json.dumps(body)
-            print(jsondata)
+            #print(jsondata)
             jsondataasbytes = jsondata.encode('utf-8')   # needs to be bytes
             req.add_header('Content-Length', len(jsondataasbytes))
-            print (jsondataasbytes)
+            #print (jsondataasbytes)
 
             reply = urllib.request.urlopen(req, jsondataasbytes).read()
             data = reply.decode('utf-8')
