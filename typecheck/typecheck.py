@@ -41,8 +41,15 @@ class TypeCheck(object):
             reply = urllib.request.urlopen(req, jsondataasbytes).read()
             data = reply.decode('utf-8')
             data = json.loads(data)
-            print(json.dumps(data["response"]["result"], indent=2), file=sys.stderr)
-
+            result = data["response"]["result"]["diagnostic"]
+            # print(json.dumps(data["response"]["result"]["diagnostic"], indent=2), file=sys.stderr)
+            diagnostic = json.loads(result)
+            print(json.dumps(diagnostic, indent=2), file=sys.stderr)
+            
+            if diagnostic is not None:
+                print("diagnostic returned")
+            else:
+                print("code OK")
             error = None
             # if mypy_result[0]:
             #     error = mypy_result[0]
