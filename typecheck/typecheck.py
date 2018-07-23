@@ -43,7 +43,7 @@ class TypeCheck(object):
             data = json.loads(data)
             result = data["response"]["result"]["diagnostic"]
             # print(json.dumps(data["response"]["result"]["diagnostic"], indent=2), file=sys.stderr)
-            diagnostic = json.loads(result)
+            diagnostic = json.loads(result).get("fakecode.py", None)
             print(json.dumps(diagnostic, indent=2), file=sys.stderr)
             
             if diagnostic is not None:
