@@ -23,7 +23,7 @@ class Ariadne(object):
 
             # prepare to call the IBM Cloud Function
             body = {"code": cells_to_run }
-            myurl = "https://openwhisk.ng.bluemix.net/api/v1/namespaces/Project%20Runway_sandbox/actions/typesForML?blocking=true"
+            myurl = "https://openwhisk.ng.bluemix.net/api/v1/namespaces/Project%20Runway_sandbox/actions/typesForML"
             apiKey = "aa8e9b0b-707b-4548-8dbf-3c53ebc84d78:0wthlpdXBkxO91YVzFIzt27cvUSXaXexiYK7HaKJA9LP5QxWMSPTbyKd4qYSl3Lz"
             req = urllib.request.Request(myurl)
             req.add_header('Content-Type', 'application/json; charset=utf-8')
@@ -67,8 +67,10 @@ class Ariadne(object):
                         line_label = "Line "+ str(error_line_number) + ": "
                         error_message = "Adriane diagnostic error:\n"
                         error_message += diag["message"] + "\n"
-                        error_message += line_label + current_cell_lines[error_line_number-1]
+                        error_message += line_label + cells_to_run[diag["range"]["start"]["line"]-1]
+                        #current_cell_lines[error_line_number-1]
                         error_message += "\n" + len(line_label)*" "+ (error_column_number-1)*" " + "^"
+                        print("Adriane DEBUG:\n"+json.dumps(diag, indent=2), file=sys.stderr)
                 if error_message is not None:
                     print(error_message, file=sys.stderr)
                 else:
