@@ -58,27 +58,22 @@ class Ariadne(object):
                 return
 
             if diagnostic is not None:
-                print("Adriane diagnostic error:\n", file=sys.stderr)
-                print(json.dumps(diagnostic, indent=2), file=sys.stderr)
+                # print(json.dumps(diagnostic, indent=2), file=sys.stderr)
+                error_message = None
+                for diag in diagnostic:
+                    if diag["severity"] == "Error":
+                        error_column_number = diag["range"]["start"]["character"]
+                        error_line_number = diag["range"]["start"]["line"] - len(("\n".join(self.ok_cells)).split("\n"))
+                        line_label = "Line "+ str(error_line_number) + ": "
+                        error_message = "Adriane diagnostic error:\n"
+                        error_message += diag["message"] + "\n"
+                        error_message += line_label + current_cell_lines[error_line_number-1]
+                        error_message += "\n" + len(line_label)*" "+ (error_column_number-1)*" " + "^"
+                if error_message is not None
+                    print(error_message, file=sys.stderr)
+                else:
+                    print("Adriane DEBUG check OK with Warnings!")
+                    self.ok_cells.append(current_cell)
             else:
-                print("Adriane check OK!")
+                print("Adriane DEBUG check OK!")
                 self.ok_cells.append(current_cell)
-
-            # error = None
-            # if mypy_result[0]:
-            #     error = mypy_result[0]
-            # if mypy_result[1]:
-            #     error = mypy_result[1]
-            # if error is not None:
-            #     parts = error.split(":")
-            #     error_line_number = int(parts[1])
-            #     error_column_number = int(parts[2])
-            #     error_line_number = error_line_number - len(("\n".join(self.ok_cells)).split("\n"))
-            #
-            #     line_label = "Line "+ str(error_line_number) + ": "
-            #     error_message = "TypeCheck" + parts[3] + ":" + parts[4]
-            #     error_message = error_message + "\n" + line_label + current_cell_lines[error_line_number-1]
-            #     error_message = error_message + "\n" + len(line_label)*" "+ (error_column_number-1)*" " + "^"
-            #     print(error_message, file=sys.stderr)
-            # else:
-            #     self.ok_cells.append(current_cell)
