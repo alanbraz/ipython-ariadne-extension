@@ -69,7 +69,7 @@ class Ariadne(object):
                         error_message += diag["message"] + "\n"
                         error_message += line_label + current_cell_lines[error_line_number-1]
                         error_message += "\n" + len(line_label)*" "+ (error_column_number-1)*" " + "^"
-                if error_message is not None
+                if error_message is not None:
                     print(error_message, file=sys.stderr)
                 else:
                     print("Adriane DEBUG check OK with Warnings!")
