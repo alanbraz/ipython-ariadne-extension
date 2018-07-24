@@ -36,12 +36,15 @@ class Ariadne(object):
             #print (jsondataasbytes)
 
             # call IBM Function
+            reply = None
             try:
                 reply = urllib.request.urlopen(req, jsondataasbytes).read()
             except:
                 e = sys.exc_info()[0]
                 print("Adriane ERROR calling IBM Function: %s" % e, file=sys.stderr)
+                return
 
+            diagnostic = None
             try:
                 data = reply.decode('utf-8')
                 data = json.loads(data)
@@ -52,6 +55,7 @@ class Ariadne(object):
             except:
                 e = sys.exc_info()[0]
                 print("Adriane ERROR parsing IBM Function results: %s" % e, file=sys.stderr)
+                return
 
             if diagnostic is not None:
                 print("Adriane diagnostic error:\n", file=sys.stderr)
