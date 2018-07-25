@@ -73,29 +73,28 @@ class Ariadne(object):
                         error_column_number = diag["range"]["start"]["character"]
                         # print("Adriane DEBUG: error_column_number: " + str(error_column_number))
                         error_line_number = diag["range"]["start"]["line"]
-                        print("Adriane DEBUG: error_line_number: " + str(error_line_number))
+                        # print("Adriane DEBUG: error_line_number: " + str(error_line_number))
                         error_cell_line_number = error_line_number - len(("\n".join(self.ok_cells)).split("\n"))
-                        print("Adriane DEBUG: error_cell_line_number: " + str(error_cell_line_number))
+                        # print("Adriane DEBUG: error_cell_line_number: " + str(error_cell_line_number))
                         line_label = "Line "+ str(error_cell_line_number+removed_lines) + ": "
                         error_message = "Adriane diagnostic error: " + diag["message"] + "\n"
                         # print("Adriane DEBUG: current_cell: " + current_cell, file=sys.stderr)
                         current_cell_array = current_cell.split("\n")
-                        print("Adriane DEBUG: current_cell_array: ")
-                        for index,line in enumerate(current_cell_array):
-                            print(index,line)
-                        print("Adriane DEBUG: current_cell_array[0]: " + current_cell_array[0])
-                        print("Adriane DEBUG: current_cell_array[error_cell_line_number-1]: " + current_cell_array[error_cell_line_number-1])
-                        print("Adriane DEBUG: current_cell_array[error_cell_line_number]: " + current_cell_array[error_cell_line_number])
-                        print("Adriane DEBUG: current_cell_array[error_cell_line_number+1]: " + current_cell_array[error_cell_line_number+1])
-                        error_message += line_label
-                        error_message += current_cell_array[error_cell_line_number-1]
+                        # print("Adriane DEBUG: current_cell_array: ")
+                        # for index,line in enumerate(current_cell_array):
+                        #    print(index,line)
+                        # print("Adriane DEBUG: current_cell_array[0]: " + current_cell_array[0])
+                        # print("Adriane DEBUG: current_cell_array[error_cell_line_number-1]: " + current_cell_array[error_cell_line_number-1])
+                        # print("Adriane DEBUG: current_cell_array[error_cell_line_number]: " + current_cell_array[error_cell_line_number])
+                        # print("Adriane DEBUG: current_cell_array[error_cell_line_number+1]: " + current_cell_array[error_cell_line_number+1])
+                        error_message += line_label + current_cell_array[error_cell_line_number]
                         # print("Adriane DEBUG: cells_to_run: " + cells_to_run, file=sys.stderr
                         error_message += "\n" + len(line_label)*" "+ (error_column_number-1)*" " + "^"
                         # print("Adriane DEBUG::\n"+json.dumps(diag, indent=2), file=sys.stderr)
                 if error_message is not None:
                     print(error_message, file=sys.stderr)
                 else:
-                    print("Adriane DEBUG: check OK with Warnings!")
+                    print("Adriane DEBUG: check OK but with warnings!")
                     self.ok_cells.append(current_cell)
             else:
                 print("Adriane DEBUG: check OK!")
