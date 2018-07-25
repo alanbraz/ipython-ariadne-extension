@@ -75,12 +75,12 @@ class Ariadne(object):
                         error_line_number = diag["range"]["start"]["line"]
                         # print("Adriane DEBUG error_line_number: " + str(error_line_number), file=sys.stderr)
                         error_cell_line_number = error_line_number - len(("\n".join(self.ok_cells)).split("\n"))
-                        print("Adriane DEBUG error_cell_line_number: " + str(error_cell_line_number), file=sys.stderr)
+                        # print("Adriane DEBUG error_cell_line_number: " + str(error_cell_line_number), file=sys.stderr)
                         line_label = "Line "+ str(error_cell_line_number+removed_lines) + ": "
                         error_message = "Adriane diagnostic error: " + diag["message"] + "\n"
-                        print("Adriane DEBUG current_cell: " + current_cell, file=sys.stderr)
+                        # print("Adriane DEBUG current_cell: " + current_cell, file=sys.stderr)
                         current_cell_array = current_cell.split("\n")
-                        print("Adriane DEBUG current_cell_array: " + current_cell_array, file=sys.stderr)
+                        print("Adriane DEBUG current_cell_array: " + str(current_cell_array), file=sys.stderr)
                         error_message += line_label + current_cell_array[error_cell_line_number-1]
 
                         # print("Adriane DEBUG cells_to_run: " + cells_to_run, file=sys.stderr
