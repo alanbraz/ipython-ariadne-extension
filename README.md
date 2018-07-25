@@ -19,6 +19,6 @@ Inside a notebook, add this cell:
 
 ### Example
 
-Check the [ariadne-test.ipynb](ariadne-test.ipynb) notebook for a full test and examples.
+Check the [ariadne-extension.ipynb](ariadne-extension.ipynb) notebook for a full test and examples.
 
-Check demo notebook at Watson Studio: https://dataplatform.ibm.com/analytics/notebooks/56025e00-cfdd-4d84-a3ab-30ed95e7180c/view?access_token=83985d34b97207a63943a98c5237f0e0ef53a5edc4e1950bc48eea25e2e9f8cd
+Check demo notebook at Watson Studio: https://dataplatform.cloud.ibm.com/analytics/notebooks/b6ee33bd-8e56-4d8c-b95f-c0e9e392b9ee/view?access_token=561996ea008e91ef2c43ea0517e6bef00590e6ce447abc2ceca4da13074dd4c3
