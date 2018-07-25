@@ -80,9 +80,9 @@ class Ariadne(object):
                         error_message = "Adriane diagnostic error: " + diag["message"] + "\n"
                         # print("Adriane DEBUG current_cell: " + current_cell, file=sys.stderr)
                         current_cell_array = current_cell.split("\n")
-                        print("Adriane DEBUG current_cell_array: " + str(current_cell_array), file=sys.stderr)
-                        error_message += line_label + current_cell_array[error_cell_line_number-1]
-
+                        # print("Adriane DEBUG current_cell_array: " + str(current_cell_array), file=sys.stderr)
+                        error_message += line_label
+                        error_message += current_cell_array[error_cell_line_number-1]
                         # print("Adriane DEBUG cells_to_run: " + cells_to_run, file=sys.stderr
                         error_message += "\n" + len(line_label)*" "+ (error_column_number-1)*" " + "^"
                         # print("Adriane DEBUG:\n"+json.dumps(diag, indent=2), file=sys.stderr)
