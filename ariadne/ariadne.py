@@ -7,7 +7,7 @@ class Ariadne(object):
 
     def check(self):
         import urllib.request
-        import sys, json, base64
+        import sys, json, base64, traceback
         cells = self.shell.user_ns["In"]
         # print("cells", cells)
         current_cell = cells[-1]
@@ -42,9 +42,12 @@ class Ariadne(object):
             except:
                 e = sys.exc_info()[0]
                 print("Adriane ERROR calling IBM Function: %s" % e, file=sys.stderr)
+                print(traceback.format_exc(), file=sys.stderr)
+                print(json.dumps(data, indent=2), file=sys.stderr)
                 return
 
             diagnostic = None
+            data = None
             try:
                 data = reply.decode('utf-8')
                 data = json.loads(data)
@@ -55,6 +58,8 @@ class Ariadne(object):
             except:
                 e = sys.exc_info()[0]
                 print("Adriane ERROR parsing IBM Function results: %s" % e, file=sys.stderr)
+                print(traceback.format_exc(), file=sys.stderr)
+                print(json.dumps(data, indent=2), file=sys.stderr)
                 return
 
             if diagnostic is not None:
