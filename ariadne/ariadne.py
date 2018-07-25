@@ -13,10 +13,13 @@ class Ariadne(object):
         current_cell = cells[-1]
         # print("current_cell", current_cell)
         current_cell_lines = []
+        removed_lines = 0
         for line in current_cell.split("\n"):
             # ignore magic commands
             if "get_ipython" not in line:
                 current_cell_lines.append(line)
+            else:
+                removed_lines += 1
         if len(current_cell_lines) > 0:
             current_cell = "\n".join(current_cell_lines)
             cells_to_run = "\n".join(self.ok_cells + [current_cell])
@@ -73,11 +76,9 @@ class Ariadne(object):
                         # print("Adriane DEBUG error_line_number: " + str(error_line_number), file=sys.stderr)
                         error_cell_line_number = error_line_number - len(("\n".join(self.ok_cells)).split("\n"))
                         # print("Adriane DEBUG error_cell_line_number: " + str(error_cell_line_number), file=sys.stderr)
-                        line_label = "Line "+ str(error_cell_line_number) + ": "
-                        error_message = "Adriane diagnostic error:\n"
-                        error_message += diag["message"] + "\n"
-                        error_message += line_label + current_cell_lines[error_cell_line_number-1]
-                        #current_cell_lines[error_line_number-1]
+                        line_label = "Line "+ str(error_cell_line_number+removed_lines) + ": "
+                        error_message = "Adriane diagnostic error: " + diag["message"] + "\n"
+                        error_message += line_label + current_cell.split("\n")[error_cell_line_number-1]
                         # print("Adriane DEBUG current_cell: " + current_cell, file=sys.stderr)
                         # print("Adriane DEBUG cells_to_run: " + cells_to_run, file=sys.stderr
                         error_message += "\n" + len(line_label)*" "+ (error_column_number-1)*" " + "^"
