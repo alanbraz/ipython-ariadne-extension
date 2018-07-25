@@ -43,7 +43,7 @@ class Ariadne(object):
                 e = sys.exc_info()[0]
                 print("Adriane ERROR calling IBM Function: %s" % e, file=sys.stderr)
                 print(traceback.format_exc(), file=sys.stderr)
-                print(json.dumps(data, indent=2), file=sys.stderr)
+                print("jsondata: " + json.dumps(jsondata, indent=2), file=sys.stderr)
                 return
 
             diagnostic = None
@@ -68,14 +68,25 @@ class Ariadne(object):
                 for diag in diagnostic:
                     if diag["severity"] == "Error":
                         error_column_number = diag["range"]["start"]["character"]
-                        error_line_number = diag["range"]["start"]["line"] - len(("\n".join(self.ok_cells)).split("\n"))
-                        line_label = "Line "+ str(error_line_number) + ": "
+                        print("Adriane DEBUG error_column_number: " + error_column_number, file=sys.stderr)
+
+                        error_line_number = diag["range"]["start"]["line"]
+                        print("Adriane DEBUG error_line_number: " + error_line_number, file=sys.stderr)
+
+                        error_cell_line_number = error_line_number - len(("\n".join(self.ok_cells)).split("\n"))
+                        print("Adriane DEBUG error_cell_line_number: " + error_cell_line_number, file=sys.stderr)
+
+                        line_label = "Line "+ str(error_cell_line_number) + ": "
                         error_message = "Adriane diagnostic error:\n"
                         error_message += diag["message"] + "\n"
-                        error_message += line_label + cells_to_run[diag["range"]["start"]["line"]-1]
+                        error_message += line_label + cells_to_run[error_line_number-1]
                         #current_cell_lines[error_line_number-1]
+                        print("Adriane DEBUG current_cell: " + current_cell, file=sys.stderr)
+                        print("Adriane DEBUG cells_to_run: " + cells_to_run, file=sys.stderr)
+
                         error_message += "\n" + len(line_label)*" "+ (error_column_number-1)*" " + "^"
                         print("Adriane DEBUG:\n"+json.dumps(diag, indent=2), file=sys.stderr)
+                        
                 if error_message is not None:
                     print(error_message, file=sys.stderr)
                 else:
