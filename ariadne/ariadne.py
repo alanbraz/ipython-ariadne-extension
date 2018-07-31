@@ -90,6 +90,13 @@ class Ariadne(object):
                         error_message += line_label + current_cell_array[error_cell_line_number]
                         # print("Adriane DEBUG: cells_to_run: " + cells_to_run, file=sys.stderr
                         error_message += "\n" + len(line_label)*" "+ (error_column_number-1)*" " + "^"
+
+                        if 'end' in diag["range"]:
+                            error_end_column_number = diag["range"]["end"]["character"]
+                            # print("Adriane DEBUG: error_column_number: " + str(error_column_number))
+                            error_end_line_number = diag["range"]["end"]["line"]
+                            error_message += "\nEnd line:" + error_end_line_number + " End column:" + error_end_column_number
+
                         # print("Adriane DEBUG::\n"+json.dumps(diag, indent=2), file=sys.stderr)
                         # TODO print range
                         if error_message is not None:
