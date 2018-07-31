@@ -67,9 +67,9 @@ class Ariadne(object):
 
             if diagnostic is not None:
                 # print(json.dumps(diagnostic, indent=2), file=sys.stderr)
-                error_message = None
                 for diag in diagnostic:
-                    if diag["severity"] == "Error":
+                    if diag["severity"] != "Information":
+                        error_message = None
                         error_column_number = diag["range"]["start"]["character"]
                         # print("Adriane DEBUG: error_column_number: " + str(error_column_number))
                         error_line_number = diag["range"]["start"]["line"]
@@ -77,7 +77,7 @@ class Ariadne(object):
                         error_cell_line_number = error_line_number - len(("\n".join(self.ok_cells)).split("\n"))
                         # print("Adriane DEBUG: error_cell_line_number: " + str(error_cell_line_number))
                         line_label = "Line "+ str(error_cell_line_number+removed_lines) + ": "
-                        error_message = "Adriane diagnostic error: " + diag["message"] + "\n"
+                        error_message = "Adriane Diagnostic "+diag["severity"]+": " + diag["message"] + "\n"
                         # print("Adriane DEBUG: current_cell: " + current_cell, file=sys.stderr)
                         current_cell_array = current_cell.split("\n")
                         # print("Adriane DEBUG: current_cell_array: ")
@@ -91,11 +91,12 @@ class Ariadne(object):
                         # print("Adriane DEBUG: cells_to_run: " + cells_to_run, file=sys.stderr
                         error_message += "\n" + len(line_label)*" "+ (error_column_number-1)*" " + "^"
                         # print("Adriane DEBUG::\n"+json.dumps(diag, indent=2), file=sys.stderr)
-                if error_message is not None:
-                    print(error_message, file=sys.stderr)
-                else:
-                    print("Adriane DEBUG: check OK but with warnings!")
-                    self.ok_cells.append(current_cell)
+                        # TODO print range
+                        if error_message is not None:
+                            print(error_message, file=sys.stderr)
+                        else:
+                            print("Adriane DEBUG: check OK!")
+                            self.ok_cells.append(current_cell)
             else:
                 print("Adriane DEBUG: check OK!")
                 self.ok_cells.append(current_cell)
