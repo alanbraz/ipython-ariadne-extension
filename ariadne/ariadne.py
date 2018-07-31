@@ -97,7 +97,7 @@ class Ariadne(object):
                             error_end_line_number = diag["range"]["end"]["line"]
                             error_message += "\nEnd line:" + error_end_line_number + " End column:" + error_end_column_number
 
-                        # print("Adriane DEBUG::\n"+json.dumps(diag, indent=2), file=sys.stderr)
+                        print("Adriane DEBUG::\n"+json.dumps(diag, indent=2), file=sys.stderr)
                         # TODO print range
                         if error_message is not None:
                             print(error_message, file=sys.stderr)
