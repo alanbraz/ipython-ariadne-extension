@@ -4,6 +4,7 @@ This is a wrapper for [WALA/ML](https://wala.github.io/) that analyzes machine l
 
 ### Overview 
 
+![overview](https://raw.githubusercontent.com/alanbraz/ipython-ariadne-extension/master/oeverview.png)
 
 ### Installation
 
