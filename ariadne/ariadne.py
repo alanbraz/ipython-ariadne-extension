@@ -2,7 +2,7 @@ class Ariadne(object):
 
     def __init__(self, ip):
         self.shell = ip
-        self.ok_cells = [ "import os", "os.environ['MYPYPATH'] = os.getenv('PYTHONPATH',os.environ['MYPYPATH'])" ]
+        self.ok_cells = [ "import os", "if 'PYTHONPATH' in os.environ:", "    os.environ['MYPYPATH'] = os.environ['PYTHONPATH']" ]
         ip.run_cell("\n".join(self.ok_cells))
 
     def check(self):
