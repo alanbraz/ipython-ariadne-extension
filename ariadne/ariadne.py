@@ -25,9 +25,10 @@ class Ariadne(object):
             cells_to_run = "\n".join(self.ok_cells + [current_cell])
 
             print("Adriane DEBUG: cells_to_run!")
-            print("cells_to_run", cells_to_run)
-            #for i, line in cells_to_run.split("\n"):
-                #print('{}: {}'.format(i+1, line.strip()))
+            #print("cells_to_run", cells_to_run)
+            cells_to_run_array = cells_to_run.split("\n")
+            for i in range(len(cells_to_run_array)):
+                print('{}: {}'.format(i+1, cells_to_run_array[i].strip()))
 
             # prepare to call the IBM Cloud Function
             body = {"code": cells_to_run }
@@ -79,9 +80,9 @@ class Ariadne(object):
                         error_line_number = diag["range"]["start"]["line"]
                         error_end_column_number = diag["range"]["end"]["character"]
                         error_end_line_number = diag["range"]["end"]["line"]
-                        # print("Adriane DEBUG: error_line_number: " + str(error_line_number))
+                        print("Adriane DEBUG: error_line_number: " + str(error_line_number))
                         error_cell_line_number = error_line_number - len(("\n".join(self.ok_cells)).split("\n"))
-                        # print("Adriane DEBUG: error_cell_line_number: " + str(error_cell_line_number))
+                        print("Adriane DEBUG: error_cell_line_number: " + str(error_cell_line_number))
                         line_label = "Line "+ str(error_cell_line_number+removed_lines) + ": "
                         error_message = "Adriane Diagnostic "+diag["severity"]+": " + diag["message"] + "\n"
                         # print("Adriane DEBUG: current_cell: " + current_cell, file=sys.stderr)
