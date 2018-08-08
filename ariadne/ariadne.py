@@ -4,11 +4,12 @@ class Ariadne(object):
         self.shell = ip
         self.ok_cells = [ "import os\nif 'PYTHONPATH' in os.environ:\n    os.environ['MYPYPATH'] = os.environ['PYTHONPATH']" ]
         ip.run_cell("\n".join(self.ok_cells))
-        
+
     def check(self):
         import urllib.request
         import sys, json, base64, traceback
         cells = self.shell.user_ns["In"]
+        print("Adriane DEBUG: user_ns", json.dumps(self.shell.user_ns, indent=2))
         # print("cells", cells)
         current_cell = cells[-1]
         # print("current_cell", current_cell)
