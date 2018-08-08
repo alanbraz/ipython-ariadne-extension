@@ -2,8 +2,9 @@ class Ariadne(object):
 
     def __init__(self, ip):
         self.shell = ip
-        self.ok_cells = [ "import os\nif 'PYTHONPATH' in os.environ:\n    os.environ['MYPYPATH'] = os.environ['PYTHONPATH']" ]
-        ip.run_cell("\n".join(self.ok_cells))
+        self.ok_cells = [ ]
+        ip.run_cell("import os\nif 'PYTHONPATH' in os.environ:\n    os.environ['MYPYPATH'] = os.environ['PYTHONPATH']")
+        self.initial_cell_index = len(self.shell.user_ns["In"])
 
     def check(self):
         import urllib.request
@@ -37,7 +38,7 @@ class Ariadne(object):
                 lines = cells_to_run_array[cell_index].split("\n")
                 for line_index in range(len(lines)):
                     total_lines += 1
-                    linesJSON.append({ "cell": cell_index, "cell_line": line_index+1, "total_line":total_lines, "text": lines[line_index] })
+                    linesJSON.append({ "cell": (cell_index+self.initial_cell_index), "cell_line": line_index+1, "total_line":total_lines, "text": lines[line_index] })
             print("Adriane DEBUG: linesJSON \n", json.dumps(linesJSON, indent=2))
 
             # prepare to call the IBM Cloud Function
