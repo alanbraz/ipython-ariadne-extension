@@ -85,7 +85,6 @@ class Ariadne(object):
                 # print(json.dumps(diagnostic, indent=2), file=sys.stderr)
                 for diag in diagnostic:
                     if diag["severity"] != "Information":
-                        # print(json.dumps(diag, indent=2), file=sys.stderr)
                         error_message = None
                         # start
                         error_column_number = diag["range"]["start"]["character"]
@@ -106,7 +105,7 @@ class Ariadne(object):
                         error_message += line_label + error_line["text"]
                         # print("Adriane DEBUG: cells_to_run: " + cells_to_run, file=sys.stderr
                         error_message += "\n" + len(line_label)*" "+ (error_column_number)*" " + (error_end_column_number-error_column_number+1)*"^"
-                        # print("Adriane DEBUG::\n"+json.dumps(diag, indent=2), file=sys.stderr)
+                        print("Adriane DEBUG::\n"+json.dumps(diag, indent=2), file=sys.stderr)
                         if error_message is not None:
                             print(error_message, file=sys.stderr)
                         else:
