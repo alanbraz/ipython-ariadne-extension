@@ -24,6 +24,10 @@ class Ariadne(object):
             current_cell = "\n".join(current_cell_lines)
             cells_to_run = "\n".join(self.ok_cells + [current_cell])
 
+            print("Adriane DEBUG: cells_to_run!")
+            for i, line in cells_to_run.split("\n"):
+                print('{}: {}'.format(i+1, line.strip()))
+
             # prepare to call the IBM Cloud Function
             body = {"code": cells_to_run }
             myurl = "https://openwhisk.ng.bluemix.net/api/v1/namespaces/Project%20Runway_sandbox/actions/typesForML?blocking=true"
@@ -66,7 +70,7 @@ class Ariadne(object):
                 return
 
             if diagnostic is not None:
-                # print(json.dumps(diagnostic, indent=2), file=sys.stderr)
+                print(json.dumps(diagnostic, indent=2), file=sys.stderr)
                 for diag in diagnostic:
                     if diag["severity"] != "Information":
                         error_message = None
