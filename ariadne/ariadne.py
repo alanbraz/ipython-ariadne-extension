@@ -2,8 +2,9 @@ class Ariadne(object):
 
     def __init__(self, ip):
         self.shell = ip
-        self.ok_cells = [ "import os", "if 'PYTHONPATH' in os.environ:", "    os.environ['MYPYPATH'] = os.environ['PYTHONPATH']" ]
-        ip.run_cell("\n".join(self.ok_cells))
+        #self.ok_cells = [ "import os", "if 'PYTHONPATH' in os.environ:", "    os.environ['MYPYPATH'] = os.environ['PYTHONPATH']" ]
+        #ip.run_cell("\n".join(self.ok_cells))
+        ip.run_cell("import os\nif 'PYTHONPATH' in os.environ:\n    os.environ['MYPYPATH'] = os.environ['PYTHONPATH']")
 
     def check(self):
         import urllib.request
@@ -22,15 +23,25 @@ class Ariadne(object):
                 removed_lines += 1
         if len(current_cell_lines) > 0:
             current_cell = "\n".join(current_cell_lines)
-            cells_to_run = "\n".join(self.ok_cells + [current_cell])
+            cells_to_run_array = self.ok_cells + [current_cell]
 
             print("Adriane DEBUG: cells_to_run!")
             #print("cells_to_run", cells_to_run)
-            cells_to_run_array = cells_to_run.split("\n")
-            for i in range(len(cells_to_run_array)):
-                print('{}: {}'.format(i+1, cells_to_run_array[i].strip()))
+            # cells_to_run_array = cells_to_run.split("\n")
+            # for i in range(len(cells_to_run_array)):
+            #     print('{}: {}'.format(i+1, cells_to_run_array[i].strip()))
+
+            linesJSON = []
+            total_lines = 0
+            for cell_index in range(len(cells_to_run_array)):
+                lines = cells_to_run_array[cell_index].split("\n")
+                for line_index in range(len(lines)):
+                    total_lines += 1
+                    linesJSON.append({ "cell": cell_index, "cell_line": line_index+1, "total_line":total_lines, "text": lines[line_index] })
+            print("Adriane DEBUG: linesJSON \n", json.dumps(linesJSON, indent=2))
 
             # prepare to call the IBM Cloud Function
+            cells_to_run = "\n".join(cells_to_run_array)
             body = {"code": cells_to_run }
             myurl = "https://openwhisk.ng.bluemix.net/api/v1/namespaces/Project%20Runway_sandbox/actions/typesForML?blocking=true"
             apiKey = "aa8e9b0b-707b-4548-8dbf-3c53ebc84d78:0wthlpdXBkxO91YVzFIzt27cvUSXaXexiYK7HaKJA9LP5QxWMSPTbyKd4qYSl3Lz"
@@ -77,25 +88,23 @@ class Ariadne(object):
                     if diag["severity"] != "Information":
                         print(json.dumps(diag, indent=2), file=sys.stderr)
                         error_message = None
+                        # start
                         error_column_number = diag["range"]["start"]["character"]
                         error_line_number = diag["range"]["start"]["line"]+1
+                        # end
                         error_end_column_number = diag["range"]["end"]["character"]
                         error_end_line_number = diag["range"]["end"]["line"]+1
                         print("Adriane DEBUG: error_line_number: " + str(error_line_number))
-                        error_cell_line_number = error_line_number - len(("\n".join(self.ok_cells)).split("\n"))
-                        print("Adriane DEBUG: error_cell_line_number: " + str(error_cell_line_number))
-                        line_label = "Line "+ str(error_cell_line_number+removed_lines) + ": "
+
+                        error_line = linesJSON[error_line_number]
+                        print("Adriane DEBUG: error_line", json.dumps(error_line, indent=2))
+
+                        # error_cell_line_number = error_line_number - len(("\n".join(self.ok_cells)).split("\n"))
+                        # print("Adriane DEBUG: error_cell_line_number: " + str(error_cell_line_number))
+
+                        line_label = "Cell ["+ str(error_line["cell"]) +"] "+"Line "+ str(error_line["cell_line"]+removed_lines) + ": "
                         error_message = "Adriane Diagnostic "+diag["severity"]+": " + diag["message"] + "\n"
-                        # print("Adriane DEBUG: current_cell: " + current_cell, file=sys.stderr)
-                        current_cell_array = current_cell.split("\n")
-                        # print("Adriane DEBUG: current_cell_array: ")
-                        # for index,line in enumerate(current_cell_array):
-                        #    print(index,line)
-                        # print("Adriane DEBUG: current_cell_array[0]: " + current_cell_array[0])
-                        # print("Adriane DEBUG: current_cell_array[error_cell_line_number-1]: " + current_cell_array[error_cell_line_number-1])
-                        # print("Adriane DEBUG: current_cell_array[error_cell_line_number]: " + current_cell_array[error_cell_line_number])
-                        # print("Adriane DEBUG: current_cell_array[error_cell_line_number+1]: " + current_cell_array[error_cell_line_number+1])
-                        error_message += line_label + current_cell_array[error_cell_line_number-1]
+                        error_message += line_label + error_line["text"]
                         # print("Adriane DEBUG: cells_to_run: " + cells_to_run, file=sys.stderr
                         error_message += "\n" + len(line_label)*" "+ (error_column_number)*" " + (error_end_column_number-error_column_number+1)*"^"
                         # print("Adriane DEBUG::\n"+json.dumps(diag, indent=2), file=sys.stderr)
