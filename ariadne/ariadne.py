@@ -26,8 +26,8 @@ class Ariadne(object):
             current_cell = "\n".join(current_cell_lines)
             cells_to_run_array = self.ok_cells + [current_cell]
 
-            print("Adriane DEBUG: cells_to_run!")
-            #print("cells_to_run", cells_to_run)
+            # print("Adriane DEBUG: cells_to_run!")
+            # print("cells_to_run", cells_to_run)
             # cells_to_run_array = cells_to_run.split("\n")
             # for i in range(len(cells_to_run_array)):
             #     print('{}: {}'.format(i+1, cells_to_run_array[i].strip()))
@@ -39,7 +39,7 @@ class Ariadne(object):
                 for line_index in range(len(lines)):
                     total_lines += 1
                     linesJSON.append({ "cell": (cell_index+self.initial_cell_index), "cell_line": line_index+1, "total_line":total_lines, "text": lines[line_index] })
-            print("Adriane DEBUG: linesJSON \n", json.dumps(linesJSON, indent=2))
+            # print("Adriane DEBUG: linesJSON \n", json.dumps(linesJSON, indent=2))
 
             # prepare to call the IBM Cloud Function
             cells_to_run = "\n".join(cells_to_run_array)
@@ -87,7 +87,7 @@ class Ariadne(object):
                 # print(json.dumps(diagnostic, indent=2), file=sys.stderr)
                 for diag in diagnostic:
                     if diag["severity"] != "Information":
-                        print(json.dumps(diag, indent=2), file=sys.stderr)
+                        # print(json.dumps(diag, indent=2), file=sys.stderr)
                         error_message = None
                         # start
                         error_column_number = diag["range"]["start"]["character"]
@@ -95,10 +95,10 @@ class Ariadne(object):
                         # end
                         error_end_column_number = diag["range"]["end"]["character"]
                         error_end_line_number = diag["range"]["end"]["line"]
-                        print("Adriane DEBUG: error_line_number: " + str(error_line_number))
+                        # print("Adriane DEBUG: error_line_number: " + str(error_line_number))
 
                         error_line = linesJSON[error_line_number]
-                        print("Adriane DEBUG: error_line", json.dumps(error_line, indent=2))
+                        # print("Adriane DEBUG: error_line", json.dumps(error_line, indent=2))
 
                         # error_cell_line_number = error_line_number - len(("\n".join(self.ok_cells)).split("\n"))
                         # print("Adriane DEBUG: error_cell_line_number: " + str(error_cell_line_number))
