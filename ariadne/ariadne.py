@@ -25,8 +25,9 @@ class Ariadne(object):
             cells_to_run = "\n".join(self.ok_cells + [current_cell])
 
             print("Adriane DEBUG: cells_to_run!")
-            for i, line in cells_to_run.split("\n"):
-                print('{}: {}'.format(i+1, line.strip()))
+            print("cells_to_run", cells_to_run)
+            #for i, line in cells_to_run.split("\n"):
+                #print('{}: {}'.format(i+1, line.strip()))
 
             # prepare to call the IBM Cloud Function
             body = {"code": cells_to_run }
