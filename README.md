@@ -1,7 +1,10 @@
-# ipython-ariadne-extension
+# iPython Extension for WALA/ML a.k.a Ariadne 
 
-This is a wrapper for [WALA/ML](https://github.com/wala/ML) that analyzes machine learning code using WALA inside an IPython notebook as an extension. It analyzes not only the running cells, but all the previous ones as a single source code and print the error in the cell's standard output.
+This is a wrapper for [WALA/ML](https://wala.github.io/) that analyzes machine learning code using WALA inside an IPython notebook as an extension. It analyzes not only the running cells, but all the previous ones as a single source code and print the error in the cell's standard output.
 
+### Overview 
+
+![overview](https://raw.githubusercontent.com/alanbraz/ipython-ariadne-extension/master/oeverview.png)
 
 ### Installation
 
@@ -17,7 +20,7 @@ Inside a notebook, add this cell:
 # to uninstall use %unload_ext
 ```
 
-### Example
+### Examples
 
 Check the [ariadne-extension.ipynb](ariadne-extension.ipynb) notebook for a full test and examples.
 
