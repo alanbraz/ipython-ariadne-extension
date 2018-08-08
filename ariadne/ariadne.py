@@ -2,10 +2,9 @@ class Ariadne(object):
 
     def __init__(self, ip):
         self.shell = ip
-        #self.ok_cells = [ "import os", "if 'PYTHONPATH' in os.environ:", "    os.environ['MYPYPATH'] = os.environ['PYTHONPATH']" ]
-        #ip.run_cell("\n".join(self.ok_cells))
-        ip.run_cell("import os\nif 'PYTHONPATH' in os.environ:\n    os.environ['MYPYPATH'] = os.environ['PYTHONPATH']")
-
+        self.ok_cells = [ "import os\nif 'PYTHONPATH' in os.environ:\n    os.environ['MYPYPATH'] = os.environ['PYTHONPATH']" ]
+        ip.run_cell("\n".join(self.ok_cells))
+        
     def check(self):
         import urllib.request
         import sys, json, base64, traceback
