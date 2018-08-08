@@ -102,10 +102,13 @@ class Ariadne(object):
 
                         line_label = "Cell ["+ str(error_line["cell"]) +"] "+"Line "+ str(error_line["cell_line"]+removed_lines) + ": "
                         error_message = "Adriane Diagnostic "+diag["severity"]+": " + diag["message"] + "\n"
-                        error_message += line_label + error_line["text"]
+                        line_text = error_line["text"]
+                        line_text_trim = line_text.strip()
+                        error_message += line_label + line_text_trim
+                        white_spaces = len(line_text)-len(line_text_trim)
                         # print("Adriane DEBUG: cells_to_run: " + cells_to_run, file=sys.stderr
-                        error_message += "\n" + len(line_label)*" "+ (error_column_number)*" " + (error_end_column_number-error_column_number+1)*"^"
-                        print("Adriane DEBUG::\n"+json.dumps(diag, indent=2), file=sys.stderr)
+                        error_message += "\n" + (len(line_label)+white_spaces+error_column_number)*" " + (error_end_column_number-error_column_number+1)*"^"
+                        # print("Adriane DEBUG::\n"+json.dumps(diag, indent=2), file=sys.stderr)
                         if error_message is not None:
                             print(error_message, file=sys.stderr)
                         else:
