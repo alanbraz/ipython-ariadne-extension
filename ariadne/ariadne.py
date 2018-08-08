@@ -9,10 +9,8 @@ class Ariadne(object):
     def check(self):
         import urllib.request
         import sys, json, base64, traceback
-        cells = self.shell.user_ns["In"]
-        print("Adriane DEBUG: user_ns", self.shell.user_ns)
-        # print("cells", cells)
-        current_cell = cells[-1]
+        # print("Adriane DEBUG: user_ns", self.shell.user_ns)
+        current_cell = self.shell.user_ns["In"][-1]
         # print("current_cell", current_cell)
         current_cell_lines = []
         removed_lines = 0
