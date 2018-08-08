@@ -90,10 +90,10 @@ class Ariadne(object):
                         error_message = None
                         # start
                         error_column_number = diag["range"]["start"]["character"]
-                        error_line_number = diag["range"]["start"]["line"]+1
+                        error_line_number = diag["range"]["start"]["line"]
                         # end
                         error_end_column_number = diag["range"]["end"]["character"]
-                        error_end_line_number = diag["range"]["end"]["line"]+1
+                        error_end_line_number = diag["range"]["end"]["line"]
                         print("Adriane DEBUG: error_line_number: " + str(error_line_number))
 
                         error_line = linesJSON[error_line_number]
