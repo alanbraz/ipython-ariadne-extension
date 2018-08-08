@@ -97,7 +97,7 @@ class Ariadne(object):
                         # print("Adriane DEBUG: current_cell_array[error_cell_line_number+1]: " + current_cell_array[error_cell_line_number+1])
                         error_message += line_label + current_cell_array[error_cell_line_number-1]
                         # print("Adriane DEBUG: cells_to_run: " + cells_to_run, file=sys.stderr
-                        error_message += "\n" + len(line_label)*" "+ (error_column_number)*" " + (error_end_column_number-error_column_number)*"^"
+                        error_message += "\n" + len(line_label)*" "+ (error_column_number)*" " + (error_end_column_number-error_column_number+1)*"^"
                         # print("Adriane DEBUG::\n"+json.dumps(diag, indent=2), file=sys.stderr)
                         if error_message is not None:
                             print(error_message, file=sys.stderr)
