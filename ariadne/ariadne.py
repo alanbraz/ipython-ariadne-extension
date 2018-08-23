@@ -108,12 +108,12 @@ class Ariadne(object):
                         white_spaces = len(line_text)-len(line_text_trim)
                         # print("Adriane DEBUG: cells_to_run: " + cells_to_run, file=sys.stderr
                         error_message += "\n" + (len(line_label)+error_column_number-white_spaces)*" " + (error_end_column_number-error_column_number)*"^"
-                        print("Adriane DEBUG::\n"+json.dumps(diag, indent=2), file=sys.stderr)
+                        # print("Adriane DEBUG::\n"+json.dumps(diag, indent=2), file=sys.stderr)
                         if error_message is not None:
                             print(error_message, file=sys.stderr)
                         else:
-                            print("Adriane DEBUG: check OK!")
+                            print("Adriane check OK!")
                             self.ok_cells.append(current_cell)
             else:
-                print("Adriane DEBUG: check OK!")
+                print("Adriane check OK!")
                 self.ok_cells.append(current_cell)
